@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -17,7 +19,6 @@ public class App
     public static void main( String[] args )
     {
     	try {
-    		System.setProperty("java.security.policy","file:///home/.../<filename>.policy");
     		server = initServerConnection();
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
@@ -39,7 +40,8 @@ public class App
     }
     
     private static IRMIServer initServerConnection() throws MalformedURLException, RemoteException, NotBoundException {
-    	IRMIServer server = (IRMIServer) Naming.lookup(RMIServerUtil.URI);
+    	Registry reg = LocateRegistry.getRegistry(1099);
+    	IRMIServer server = (IRMIServer) reg.lookup(RMIServerUtil.URI);
     	return server;
     }
 
