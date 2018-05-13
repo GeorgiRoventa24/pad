@@ -5,7 +5,7 @@
 	<groupId>com.pad.bgvi</groupId>
 	<artifactId>bgvi-client</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>bgvi-client</name>
 	<url>http://maven.apache.org</url>
