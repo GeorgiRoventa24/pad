@@ -14,21 +14,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.SwingConstants;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 import com.pad.bgvi.common.RMIServerUtil;
 import com.pad.bgvi.common.model.Article;
 import com.pad.bgvi.common.rmi.Shop;
+//import javafx.scene.layout.Region;
 
 public class MyClient extends JFrame{
 
@@ -115,7 +107,7 @@ public class MyClient extends JFrame{
 
         //first box
         JLabel label1 = new JLabel();
-        label1.setBounds(370, 150 + height, 1000, 200);
+        label1.setBounds(170, 150 + height, 1000, 200);
         Border border1 = BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5);
         label1.setBorder(border1);
         label1.setOpaque(true);
@@ -127,18 +119,16 @@ public class MyClient extends JFrame{
         label_title1.setFont(new Font(label_title1.getName(), Font.PLAIN, 20));
         panel.add(label_title1);
 
-        JLabel label_des1 = new JLabel(a.getDescription());
-        label_des1.setBounds(460, 200 + height, 1000, 50);
-
+        JLabel label_des1 = new JLabel("<html>"  + a.getDescription() + "</html>");
+        label_des1.setBounds(200, 200 + height, 1000, 50);
         label_des1.setFont(new Font("Courier New", Font.PLAIN, 14));
         label_des1.setForeground(Color.GRAY);
-
         label_des1.setHorizontalAlignment(SwingConstants.CENTER);
         label_des1.setFont(new Font(label_des1.getName(), Font.PLAIN, 20));
         panel.add(label_des1);
 
         JLabel price_l = new JLabel(a.getPrice() + "$");
-        price_l.setBounds(600, 280 + height, 200, 30);
+        price_l.setBounds(400, 280 + height, 200, 30);
         price_l.setFont(new Font("Serif", Font.PLAIN, 30));
         panel.add(price_l);
 
@@ -184,7 +174,7 @@ public class MyClient extends JFrame{
             b_comanda = new JButton("Vezi cosul");
 
         }
-        b.setBounds(450,120,100,50);
+        b.setBounds(600,120,100,50);
         b.setBackground(Color.pink);
         b.setForeground(Color.white);
         label1.add(b);
@@ -223,7 +213,7 @@ public class MyClient extends JFrame{
     public static void main(String args[]) throws Exception {
 
     	Registry reg = LocateRegistry.getRegistry("192.168.43.94");
-        shop = (Shop) reg.lookup(RMIServerUtil.URI);
+        shop = (Shop) reg.lookup("//192.168.43.94/server-management");
 
         List<Article> articleList = shop.getArticles();
         MyClient myClient = new MyClient(articleList);
