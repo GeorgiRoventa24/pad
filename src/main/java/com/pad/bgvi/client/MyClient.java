@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class MyClient extends JFrame{
 	JFrame frame;
     Article add;
     double total_price = 0;
+    private static Shop shop;
     List<Article> articles = new ArrayList<Article>();
     ArrayList<Article_cos> articles_cos = new ArrayList<Article_cos>();
     JLabel price_total;
@@ -152,13 +154,20 @@ public class MyClient extends JFrame{
                     JOptionPane.showMessageDialog(null, "Comanda a fost inregistrata");
                     price_total.setText("Total: 0$");
 
+                    List<Article> articles = new ArrayList<Article>();
                     for(Article_cos art: articles_cos){
                         //System.out.print(art);
+                    	art.a.setQuantity(art.a.getQuantity()-1);
+                    	articles.add(art.a);
                         remove(art.l1, art.l2, art.l3, art.l4, art.a.getPrice());
                     }
+                    try {
+						shop.buyArticles(articles);
+					} catch (RemoteException e1) {
+						e1.printStackTrace();
+					}
                     articles_cos = null;
                     //height = 0;
-
                 }
 
             });
@@ -213,7 +222,7 @@ public class MyClient extends JFrame{
 
     public static void main(String args[]) throws Exception {
     	Registry reg = LocateRegistry.getRegistry(1099);
-        Shop shop = (Shop) reg.lookup(RMIServerUtil.URI);
+        shop = (Shop) reg.lookup(RMIServerUtil.URI);
         List<Article> articleList = shop.getArticles();
         MyClient myClient = new MyClient(articleList);
     }
