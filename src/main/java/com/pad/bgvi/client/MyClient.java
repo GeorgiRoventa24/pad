@@ -115,7 +115,7 @@ public class MyClient extends JFrame{
 
         //first box
         JLabel label1 = new JLabel();
-        label1.setBounds(370, 150 + height, 600, 200);
+        label1.setBounds(370, 150 + height, 1000, 200);
         Border border1 = BorderFactory.createLineBorder(Color.LIGHT_GRAY, 5);
         label1.setBorder(border1);
         label1.setOpaque(true);
@@ -128,7 +128,7 @@ public class MyClient extends JFrame{
         panel.add(label_title1);
 
         JLabel label_des1 = new JLabel(a.getDescription());
-        label_des1.setBounds(460, 200 + height, 600, 50);
+        label_des1.setBounds(460, 200 + height, 1000, 50);
 
         label_des1.setFont(new Font("Courier New", Font.PLAIN, 14));
         label_des1.setForeground(Color.GRAY);
@@ -221,12 +221,14 @@ public class MyClient extends JFrame{
     }
 
     public static void main(String args[]) throws Exception {
-    	Registry reg = LocateRegistry.getRegistry(1099);
+
+    	Registry reg = LocateRegistry.getRegistry("192.168.43.94");
         shop = (Shop) reg.lookup(RMIServerUtil.URI);
+
         List<Article> articleList = shop.getArticles();
         MyClient myClient = new MyClient(articleList);
     }
-
+    
 }
 
 class Article_cos{
